@@ -1,0 +1,71 @@
+---
+title: "mrubiog2000_OriginalHomeworkCode_02"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+QUESTION 1. What is the probability that she will hear more than 8 calls during any given session?
+
+```{r}
+L <- 15 #Lambda value: average events (titi calls) in Poisson distribution.
+x <- 1:8 #9 is the minimum number of calls required in the problem.
+
+calls1 <- ppois(q = x, lambda = L) #We calculate the cumulative probability of hearing 1 call, 2 calls, 3 calls... till 8 calls.
+
+1 - calls1
+
+#We calculate the probability of NOT hearing 1 nor 2, nor 3... nor 8 calls. That means the probability of hearing more than 8 calls.
+
+```
+
+QUESTION 2. What is the probability that she will hear no calls in a session?
+
+```{r}
+
+dpois(x = 0, lambda = L) #Probability of hearing no calls (x=0)
+
+
+```
+
+QUESTION 3. What is the probability that she will hear exactly 3 calls in a session?
+
+```{r}
+
+dpois(x = 3, lambda = L) #Probability of hearing 3 calls (x=3).
+
+```
+
+QUESTION 4. Plot the relevant Poisson mass function over the values in range 0 ≤ x ≤ 30.
+
+```{r}
+
+x <- c(0:30)
+
+barplot(ppois(q = x, lambda = L), 
+  ylim = 0:1, #Interval showed in the "Y" axis.
+  space = 0,
+  names.arg = x, #Used to label each bar of the plot.
+  xlab = "number of calls", 
+  ylab = "prob(x)", #Name of axis.
+  main = "Mass function in range 0 < x < 30", #Title of the plot.
+  col="light blue"
+        )
+#Bar Plot where it is represented the mass function in range 0 ≤ x ≤ 30.
+
+```
+
+QUESTION 5. Simulate 104 results from this distribution (i.e., 2 years of Saturday monitoring sessions).
+
+```{r}
+
+
+```
