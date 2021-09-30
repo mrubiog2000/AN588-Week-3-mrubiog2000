@@ -1,0 +1,109 @@
+---
+title: "ejv98_PeerCommentary02_mrubiog2000"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+QUESTION 1. What is the probability that she will hear more than 8 calls during any given session?
+
+```{r}
+L <- 15 #Lambda value: average events (titi calls) in Poisson distribution.
+x <- 1:8 #9 is the minimum number of calls required in the problem.
+calls1 <- ppois(q = x, lambda = L) #We calculate the cumulative probability of hearing 1 call, 2 calls, 3 calls... till 8 calls.
+1 - calls1
+#We calculate the probability of NOT hearing 1 nor 2, nor 3... nor 8 calls. That means the probability of hearing more than 8 calls.
+```
+#Diego: This works but you can do it in one step by using ppois(8, l, lower.tail = FALSE). The lower.tail = FALSE argument makes the function start from the opposite side so it gives you the probability of x being greater than 8 instead of lower than 8, which is the default for ppois.
+#Liz: I set mine up the same way! Works well. Although, I noticed Diego has a very efficient way of doing it, as you guys mentioned before. 
+
+QUESTION 2. What is the probability that she will hear no calls in a session?
+
+```{r}
+dpois(x = 0, lambda = L) #Probability of hearing no calls (x=0)
+```
+#Diego: Perfect!
+#Liz: Nice! I set mine up the same. 
+
+QUESTION 3. What is the probability that she will hear exactly 3 calls in a session?
+
+```{r}
+dpois(x = 3, lambda = L) #Probability of hearing 3 calls (x=3).
+```
+#Diego: Perfect!
+#Liz: Nice! I did the same thing as well
+
+QUESTION 4. Plot the relevant Poisson mass function over the values in range 0 ≤ x ≤ 30.
+
+```{r}
+x <- c(0:30)
+barplot(ppois(q = x, lambda = L), 
+  ylim = 0:1, #Interval showed in the "Y" axis.
+  space = 0,
+  names.arg = x, #Used to label each bar of the plot.
+  xlab = "number of calls", 
+  ylab = "prob(x)", #Name of axis.
+  main = "Mass function in range 0 < x < 30", #Title of the plot.
+  col="light blue"
+        )
+#Bar Plot where it is represented the mass function in range 0 ≤ x ≤ 30.
+```
+#Diego: With ppois you plot the cumulative probability of the poisson distribution instead of the mass function. You should use dpois instead. However, your code helped me realize that i can do the plot in a more efficient way in just one step without having to create a new variable containing the dpois function, so thank you! I also learned from your code how to change the color of the plot :)
+#Liz: I set mine up with dpois as Diego suggested, but I see you both commented on my own code that this is a more efficient way of doing it. 
+
+QUESTION 5. Simulate 104 results from this distribution (i.e., 2 years of Saturday monitoring sessions).
+
+```{r}
+rpois(n = 104, lambda = L)
+#The function "rpois" generate "n" random results following the Poisson's distribution with a given value for lambda.
+```
+#Diego: Perfect!
+
+#Liz: Nice job!
+
+
+QUESTION 6. Plot the simulated results using hist() and use xlim() to set the horizontal limits to be from 0 to 30. How does your histogram compare to the shape of the probability mass function you plotted above?
+
+```{r}
+sim <- rpois(n = 104, lambda = L) #Necessary to set a vector with the function to apply it to the histogram.
+hist(sim, 
+     plot = TRUE, #Necessary to make a plot.
+     xlim = c(0, 30), #To set the limits of the "x" axis (necessary to use "c()" structure).
+     xlab = "number of calls",
+     ylab = "Frequency",
+     main = "Histogram 104 sessions",
+     col = "pink"
+     )
+#Histogram that shows the frequency of the results (number of calls) of 104 "hearing titis" sessions, but only from "0-30 calls" (probabilities higher than 30 are practically 0).
+```
+#Diego: The code works well! A few annotations: the "plot" argument is set as TRUE by default, so there's no need to write it. You can also use the argument "breaks" to set the breakpoints of the bars in the histogram as you want. You can also set "probability = TRUE" so that the histogram represents the probabilities instead of the frequencies.
+#Liz: The code runs well! I had my own issues with this question, but I see how you broke it up. Its nice to see your thought process. I am going to give this a try! 
+
+```{r}
+#Problem 1: Although now it seems obvious, I struggled the most trying to understand what was my "x" values in the first problems. I thought it was the number of the possibles calls within a day, so I could not find any value. SOLUTION: I checked notes from my statistics course (that I had totally forgot) and red Module 8 explanation again so I understood better Poisson's distribution.
+#Problem 2: I did not know how to obtain random values in the Poisson's distribution for question 4. SOLUTION: I searched in the "help" section the function "dpois" I had used before to see if there was an option to set random values. In that page I found the explanation for "rpois" function.
+#Problem 3: I could not set the "xlim" function in the histogram from question 6, because R told me writing "0:30", as I did in the previous plot, was not correct. The syntax was not indicated in the "help" section for "histogram" either. SOLUTION: I googled it and found an example of a code.
+```
+#Diego: Nice problem solving!
