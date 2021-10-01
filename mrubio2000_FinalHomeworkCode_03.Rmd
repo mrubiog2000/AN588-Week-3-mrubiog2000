@@ -36,17 +36,17 @@ QUESTION 4. Plot the relevant Poisson mass function over the values in range 0 �
 
 ```{r}
 y <- c(0:30)
-barplot(dpois(x = y, lambda = L), 
+barplot(dpois(x = y, lambda = L),
   ylim = 0:1/8, #Interval showed in the "Y" axis.
   space = 0,
-  names.arg = x, #Used to label each bar of the plot.
+  names.arg = y, #Used to label each bar of the plot.
   xlab = "number of calls", 
   ylab = "prob(x)", #Name of axis.
   main = "Mass function in range 0 < x < 30", #Title of the plot.
   col="light blue"
         )
 #Bar Plot where it is represented the mass function in range 0 ≤ x ≤ 30. 
-#I changed the "ppois" function with the "dpois" function in order to calculate the mass function insead of the cumulative function as I did before.
+#I changed the "ppois" function with the "dpois" function in order to calculate the mass function instead of the cumulative function as I did before.
 ```
 
 
